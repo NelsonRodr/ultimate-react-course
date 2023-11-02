@@ -142,3 +142,55 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+const book = getBook(1);
+
+// Destruct instance variables into own variables
+// variables must be called the same as in the object
+
+// const title = book.title;
+// const author = book.author;
+
+const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
+  book;
+book;
+
+console.log(author, title, genres);
+
+// Destruct array- into own variables
+// does not rely on the variable names but on the order of the array
+
+// const primaryGenre = genres[0];
+// const secondaryGenre = genres[1];
+
+const [firstGenre, secondGenre] = genres;
+console.log(firstGenre, secondGenre);
+
+//rest operator
+const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
+
+console.log(primaryGenre, secondaryGenre, otherGenres);
+
+//spread operator
+const newGenres = [...genres, "epic fantasy"];
+newGenres;
+
+const updatedBook = {
+  ...book,
+  // Adding a new property
+  moviePublicationDate: "2001-12-19",
+  //Overwriting an existing property
+  pages: 1210,
+};
+
+updatedBook;
+
+// Template Literals
+const summary = `${title}, is a book with ${pages} pages and published in ${
+  publicationDate.split("-")[0]
+}`;
+summary;
+
+//Ternaries Instead of if/else Statements
+const pagesRange = pages > 1000 ? "over a thousand" : "less than 10000";
+pagesRange;
