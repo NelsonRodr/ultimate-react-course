@@ -142,8 +142,9 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
-
+/*
 const book = getBook(1);
+book;
 
 // Destruct instance variables into own variables
 // variables must be called the same as in the object
@@ -153,8 +154,7 @@ const book = getBook(1);
 
 const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
   book;
-book;
-
+pages;
 console.log(author, title, genres);
 
 // Destruct array- into own variables
@@ -185,12 +185,149 @@ const updatedBook = {
 
 updatedBook;
 
-// Template Literals
+// Template Literals (= Python f-strings)
 const summary = `${title}, is a book with ${pages} pages and published in ${
   publicationDate.split("-")[0]
-}`;
+} The book has ${hasMovieAdaptation ? "" : "not"} been adapted as a movie.`;
 summary;
 
-//Ternaries Instead of if/else Statements
+// Ternaries Instead of if/else Statements
 const pagesRange = pages > 1000 ? "over a thousand" : "less than 10000";
 pagesRange;
+console.log(`The book has ${pagesRange} pages.`);
+
+// Arrow Functions (= Python lambda functions)
+
+// function getYear(str) {
+//   return str.split("-")[0];
+// }
+
+const getYear = (str) => str.split("-")[0];
+
+console.log(getYear(publicationDate));
+
+// Short-Circuiting And Logical Operators
+// operator doesn't even look at the second value if something is false
+// we can use this like an if statement
+console.log(true && "Some string");
+console.log(false && "Some string");
+console.log(hasMovieAdaptation && "Some string");
+
+//falsy: 0, '', null, undefined
+//first string will be converted to true
+console.log("jonas" && "Some string");
+console.log(0 && "Some string");
+
+console.log(true || "Some string");
+console.log(false || "Some string");
+
+// when language is undefined it will assign "NOT TRANSLATED"
+const spanishTranslation = book.translations.spanish || "NOT TRANSLATED";
+
+spanishTranslation;
+
+//if the reviewsCount is 0 we want to display it nonetheless -> not possible with ||
+const count = book.reviews.librarything.reviewsCount ?? "no data";
+count;
+
+// Optional Chaining
+
+function getTotalReviewCount(book) {
+  // When we are not sure if the property exists when can use ? then it will not lead to an error
+  const goodreads = book.reviews?.goodreads?.reviewsCount ?? 0; // so that it will not return NaN we put ?? 0
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+  librarything;
+  return goodreads + librarything;
+}
+
+console.log(getTotalReviewCount(book));
+
+
+// Array map (= Python list comprehension)
+
+const x = [1, 2, 3, 4, 5].map((el) => el * 2);
+console.log(x);
+
+const books = getBooks();
+books;
+
+const titles = books.map((book) => book.title);
+titles;
+
+const essentialData = books.map((book) => {
+  return {
+    title: book.title,
+    author: book.author,
+  };
+});
+essentialData;
+
+// Array Filter
+const longBooks = books.filter((book) => book.pages > 500);
+longBooks;
+
+const longBooksWithMovie = books
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation);
+longBooksWithMovie;
+
+// More efficient
+// const longBooksWithMovie = books.filter(
+//   (book) => book.pages > 500 && book.hasMovieAdaptation
+// );
+
+// Array Reduce
+// acc is accumulator, but can also called everything we want
+const pagesAllBooks = books.reduce((acc, book) => acc + book.pages, 0);
+pagesAllBooks;
+
+// Array Sort
+// to not affect arr use slice() !
+const arr = [3, 7, 1, 9, 6];
+const sorted = arr.slice().sort((a, b) => a - b); // We must not understand this, just remember a - b for ascending and b - a to sort it descending
+sorted;
+arr;
+
+const sortedByPages = books.slice().sort((a, b) => b.pages - a.pages);
+sortedByPages;
+
+// Working with immutable Arrays
+
+// 1) Add book object to array
+
+const newBook = {
+  id: 6,
+  title: "Harry Potter and the Chamber of Secrets",
+  author: "J. K. Rowling",
+};
+const booksAfterAdd = [...books, newBook];
+booksAfterAdd;
+
+// 2) Delete book object from array
+
+const booksAfterDelete = books.filter((book) => book.id !== 3); // Book with id 3 gets filtered out
+booksAfterDelete;
+
+// 3) Update book objects in the array
+
+const booksAfterUpdate = booksAfterDelete.map((book) =>
+  book.id === 1 ? { ...book, pages: 2000 } : book
+);
+booksAfterUpdate;
+
+*/
+
+// API fetch (asynchron)
+// fetch("http://jsonplaceholder.typicode.com/todos") // javascript does not wait for response
+//   .then((res) => res.json())
+//   .then((data) => console.log(data));
+
+// console.log("jonas");
+
+async function getTodos() {
+  const res = await fetch("http://jsonplaceholder.typicode.com/todos"); // await can only be used in async fucntions
+  const data = await res.json();
+  console.log(data);
+}
+
+getTodos();
