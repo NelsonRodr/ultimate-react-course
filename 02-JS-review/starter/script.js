@@ -142,7 +142,7 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
-/*
+
 const book = getBook(1);
 book;
 
@@ -242,7 +242,6 @@ function getTotalReviewCount(book) {
 
 console.log(getTotalReviewCount(book));
 
-
 // Array map (= Python list comprehension)
 
 const x = [1, 2, 3, 4, 5].map((el) => el * 2);
@@ -315,9 +314,8 @@ const booksAfterUpdate = booksAfterDelete.map((book) =>
 );
 booksAfterUpdate;
 
-*/
-
 // API fetch (asynchron)
+
 // fetch("http://jsonplaceholder.typicode.com/todos") // javascript does not wait for response
 //   .then((res) => res.json())
 //   .then((data) => console.log(data));
